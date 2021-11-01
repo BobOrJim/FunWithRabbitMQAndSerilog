@@ -3,6 +3,8 @@ using System.Linq;
 using RabbitMQ.Client;
 using System.Text;
 using System.Threading;
+using System.IO;
+using Serilog;
 
 namespace ConsoleProducerWithAckWithRouting
 {
@@ -10,6 +12,17 @@ namespace ConsoleProducerWithAckWithRouting
     {
         public static void Main()
         {
+
+
+            var solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent;
+            var myDirectory = Directory.GetParent(solutionDirectory.ToString()) + @"\Logs\MySolutionLog_.txt";
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.File(myDirectory, rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
+            Log.Information($" producer starting ");
+
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
@@ -25,6 +38,7 @@ namespace ConsoleProducerWithAckWithRouting
 
                     channel.BasicPublish(exchange: "ThievesDen", routingKey: destination[messageCounter % 3], basicProperties: null, body: body);
                     Console.WriteLine($"Sent message with id {messageCounter} to {destination[messageCounter % 3]}", destination[messageCounter % 3], message);
+                    Log.Information($" A message is sent to {destination}. With the text: {message}");
                     Thread.Sleep(100);
                     messageCounter++;
                 }
