@@ -2,37 +2,33 @@
 using System.Linq;
 using RabbitMQ.Client;
 using System.Text;
+using System.Threading;
 
 namespace ConsoleProducerWithAckWithRouting
 {
     class Program
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
                 int messageCounter = 0;
+                channel.ExchangeDeclare(exchange: "ThievesDen", type: "direct");
+
                 while (true)
                 {
-
-                    channel.ExchangeDeclare(exchange: "direct_logs", type: "direct");
-
-                    var severity = (args.Length > 0) ? args[0] : "info";
-
-                    var message = (args.Length > 1) ? string.Join(" ", args.Skip(1).ToArray()) : "Hello World!";
-
+                    string[] destination = { "ReservoirDog.MrBrown", "ReservoirDog.MrBlue", "ReservoirDog.MrBlonde" };
+                    string message = $"MrPink is a COP!. messageId = {messageCounter}";
                     var body = Encoding.UTF8.GetBytes(message);
-                    channel.BasicPublish(exchange: "direct_logs", routingKey: severity, basicProperties: null, body: body);
-                    Console.WriteLine(" [x] Sent '{0}':'{1}'", severity, message);
-                    
+
+                    channel.BasicPublish(exchange: "ThievesDen", routingKey: destination[messageCounter % 3], basicProperties: null, body: body);
+                    Console.WriteLine($"Sent message with id {messageCounter} to {destination[messageCounter % 3]}", destination[messageCounter % 3], message);
+                    Thread.Sleep(100);
                     messageCounter++;
                 }
             }
-
-
-
         }
     }
 }
