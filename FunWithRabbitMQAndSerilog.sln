@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleProducer", "src\ConsoleProducer\ConsoleProducer.csproj", "{2EAFFFCE-B75B-4813-BDA9-501CB0EBA3A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleConsumer", "ConsoleConsumer\ConsoleConsumer.csproj", "{4B800839-D878-42E6-AF67-1BA219A467E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleConsumer", "src\ConsoleConsumer\ConsoleConsumer.csproj", "{4B800839-D878-42E6-AF67-1BA219A467E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
