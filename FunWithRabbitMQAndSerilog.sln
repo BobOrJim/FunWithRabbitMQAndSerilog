@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleProducerWithAck", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleConsumerWithAck", "src\ConsoleConsumerWithAck\ConsoleConsumerWithAck.csproj", "{ECC1F821-BE53-4E34-A1B1-06454029B510}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleConsumerWithAckWithRouting", "ConsoleConsumerWithAckWithRouting\ConsoleConsumerWithAckWithRouting.csproj", "{7B7AAC7F-780B-403B-A108-BFB033F0AF72}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleConsumerWithAckWithRouting", "src\ConsoleConsumerWithAckWithRouting\ConsoleConsumerWithAckWithRouting.csproj", "{7B7AAC7F-780B-403B-A108-BFB033F0AF72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleProducerWithAckWithRouting", "ConsoleProducerWithAckWithRouting\ConsoleProducerWithAckWithRouting.csproj", "{0D4D3767-755B-43AB-940A-C977B984281F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleProducerWithAckWithRouting", "src\ConsoleProducerWithAckWithRouting\ConsoleProducerWithAckWithRouting.csproj", "{0D4D3767-755B-43AB-940A-C977B984281F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
