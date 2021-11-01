@@ -1,0 +1,12 @@
+            var currentDirectory = Directory.GetCurrentDirectory();
+            var logDirectory = Directory.GetParent(currentDirectory.ToString()) + "/Logs/IDP_Locallog_.txt";
+            Console.WriteLine(logDirectory);
+
+            Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.File(logDirectory, rollingInterval: RollingInterval.Day) //\DashboardServer.log
+            .CreateLogger();
+            //Log.Information("logDirectory = " + logDirectory.ToString());
+
+
+            Log.Information("Hello, from program.cs in IDP");

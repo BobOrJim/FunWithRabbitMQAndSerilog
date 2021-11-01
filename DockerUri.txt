@@ -1,0 +1,22 @@
+docker run -d --hostname my-rabbit --name epax-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+
+Unable to find image 'rabbitmq:3-management' locally
+3-management: Pulling from library/rabbitmq
+7b1a6ab2e44d: Pull complete
+37f453d83d8f: Pull complete
+f296e79f8752: Pull complete
+78711784c21f: Pull complete
+3977c58a33ad: Pull complete
+707434b29dea: Pull complete
+ec3bc49d8e7a: Pull complete
+cc45a47d6f86: Pull complete
+b8b0b52c5fd3: Pull complete
+293edc279391: Pull complete
+Digest: sha256:37f39d4af8ba92ccbc63043e4bdc89dd4e334cae045fd7d60182c23708de5f93
+Status: Downloaded newer image for rabbitmq:3-management
+cf6ac9addf0fc16eeaeb40d12cad9c85323e24763628a8bbff12e80ef268784f
+
+
+NOTE:
+5672 används i min kod
+15672 används av manager
