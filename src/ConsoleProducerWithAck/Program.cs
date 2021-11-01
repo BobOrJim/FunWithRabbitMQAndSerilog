@@ -1,6 +1,7 @@
 ﻿using System;
 using RabbitMQ.Client;
 using System.Text;
+using System.Threading;
 
 namespace ConsoleProducerWithAck
 {
@@ -12,23 +13,27 @@ namespace ConsoleProducerWithAck
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.QueueDeclare(queue: "task_queue",
-                                     durable: true,
-                                     exclusive: false,
-                                     autoDelete: false,
-                                     arguments: null);
+                int messageCounter = 0;
+                while (true)
+                {
 
-                var message = GetMessage(args);
-                var body = Encoding.UTF8.GetBytes(message);
+                    channel.QueueDeclare(queue: "task_queue", durable: true, exclusive: false, autoDelete: false, arguments: null);
 
-                var properties = channel.CreateBasicProperties();
-                properties.Persistent = true;
+                    //var message = GetMessage(args);
+                    string message = $"Hello World!{messageCounter}";
 
-                channel.BasicPublish(exchange: "",
-                                     routingKey: "task_queue",
-                                     basicProperties: properties,
-                                     body: body);
-                Console.WriteLine(" [x] Sent {0}", message);
+                    var body = Encoding.UTF8.GetBytes(message);
+
+                    var properties = channel.CreateBasicProperties();
+                    properties.Persistent = true;
+
+                    channel.BasicPublish(exchange: "", routingKey: "task_queue", basicProperties: properties, body: body);
+
+                    Console.WriteLine($" [x] Sent {messageCounter}", message);
+                    Thread.Sleep(300);
+
+                    messageCounter++;
+                }
             }
 
             Console.WriteLine(" Press [enter] to exit.");
