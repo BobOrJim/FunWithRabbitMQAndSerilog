@@ -15,12 +15,11 @@ namespace ConsoleProducerWithAckWithRouting
 
 
             var solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent;
-            var myDirectory = Directory.GetParent(solutionDirectory.ToString()) + @"\Logs\MySolutionLog_.txt";
+            var myDirectory = Directory.GetParent(solutionDirectory.ToString()) + @"\Logs\MySolutionLog.txt";
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .WriteTo.File(myDirectory, rollingInterval: RollingInterval.Day)
+                //.WriteTo.File(myDirectory, rollingInterval: RollingInterval.Day, shared: true) // stops append from working?
+                .WriteTo.File(myDirectory, shared: true)
                 .CreateLogger();
-
             Log.Information($" producer starting ");
 
             var factory = new ConnectionFactory() { HostName = "localhost" };

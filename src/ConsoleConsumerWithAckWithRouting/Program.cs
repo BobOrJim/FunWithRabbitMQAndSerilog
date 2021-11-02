@@ -13,13 +13,13 @@ namespace ConsoleConsumerWithAckWithRouting
         public static void Main(string[] args)
         {
             var solutionDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent;
-            var myDirectory = Directory.GetParent(solutionDirectory.ToString()) + @"\Logs\MySolutionLog_.txt";
+            var myDirectory = Directory.GetParent(solutionDirectory.ToString()) + @"\Logs\MySolutionLog.txt";
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
-                .WriteTo.File(myDirectory, rollingInterval: RollingInterval.Day)
+                //.WriteTo.File(myDirectory, rollingInterval: RollingInterval.Day, shared: true) // stops append from working?
+                .WriteTo.File(myDirectory, shared: true)
                 .CreateLogger();
-
             Log.Information($" consumer starting ");
 
 
@@ -28,7 +28,7 @@ namespace ConsoleConsumerWithAckWithRouting
             using (var channel = connection.CreateModel())
             {
                 channel.ExchangeDeclare(exchange: "ThievesDen", type: "direct");
-                var queueName = channel.QueueDeclare().QueueName; //
+                var queueName = channel.QueueDeclare().QueueName;
 
                 string[] possibleRecievers = { "ReservoirDog.MrBrown", "ReservoirDog.MrBlue", "ReservoirDog.MrBlonde" };
                 Random rnd = new Random();
@@ -48,8 +48,10 @@ namespace ConsoleConsumerWithAckWithRouting
                         Console.WriteLine($" {thisReciever} picked up a message with address: {routingKey}. The message is: {message}");
                         Log.Information($" {thisReciever} read a message with the text: {message}");
                         Thread.Sleep(1000);
+                        channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+
                     };
-                    channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
+                    channel.BasicConsume(queue: queueName, autoAck: false, consumer: consumer);
                 }
             }
         }
