@@ -20,3 +20,7 @@ cf6ac9addf0fc16eeaeb40d12cad9c85323e24763628a8bbff12e80ef268784f
 NOTE:
 5672 används i min kod
 15672 används av manager
+
+
+http://localhost:15672/
+
